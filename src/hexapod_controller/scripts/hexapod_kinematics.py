@@ -9,7 +9,8 @@ COXA_HEIGHT = 0.03555
 
 FEMUR_JOINT_COXA = np.array([0.048342, 0.006033, -0.018004])
 FEMUR_VECTOR_COXA = np.array([0.077851, 0.044948, 0.0])
-TIBIA_FOOT_TIBIA = np.array([0.021830, 0.034581, -0.085801])
+# Bottom of the 5 mm radius foot half-sphere (tibia link frame)
+TIBIA_FOOT_TIBIA = np.array([0.007412, 0.026161, -0.123405])
 
 _COXA_MOUNT_ANGLE = LEG_MOUNT_ANGLES[0]
 _COS_MOUNT = math.cos(_COXA_MOUNT_ANGLE)

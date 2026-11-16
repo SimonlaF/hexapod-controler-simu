@@ -178,6 +178,12 @@
         <cylinder radius="0.012" length="0.12"/>
       </geometry>
     </collision>
+    <collision name="leg_0_tibia_foot_collision">
+      <origin xyz="0.007412 0.026161 -0.118405" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
   </link>
 
 
@@ -305,6 +311,12 @@
       <origin xyz="-0.019033 0.036196 -0.025801" rpy="0 0 0"/>
       <geometry>
         <cylinder radius="0.012" length="0.12"/>
+      </geometry>
+    </collision>
+    <collision name="leg_1_tibia_foot_collision">
+      <origin xyz="-0.018950 0.019499 -0.118405" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
       </geometry>
     </collision>
   </link>
@@ -436,6 +448,12 @@
         <cylinder radius="0.012" length="0.12"/>
       </geometry>
     </collision>
+    <collision name="leg_2_tibia_foot_collision">
+      <origin xyz="-0.026362 -0.006662 -0.118405" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
   </link>
 
 
@@ -563,6 +581,12 @@
       <origin xyz="-0.02183 -0.034582 -0.025801" rpy="0 0 0"/>
       <geometry>
         <cylinder radius="0.012" length="0.12"/>
+      </geometry>
+    </collision>
+    <collision name="leg_3_tibia_foot_collision">
+      <origin xyz="-0.007412 -0.026161 -0.118405" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
       </geometry>
     </collision>
   </link>
@@ -694,6 +718,12 @@
         <cylinder radius="0.012" length="0.12"/>
       </geometry>
     </collision>
+    <collision name="leg_4_tibia_foot_collision">
+      <origin xyz="0.018950 -0.019499 -0.118405" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
+      </geometry>
+    </collision>
   </link>
 
 
@@ -821,6 +851,12 @@
       <origin xyz="0.040863 -0.001614 -0.025801" rpy="0 0 0"/>
       <geometry>
         <cylinder radius="0.012" length="0.12"/>
+      </geometry>
+    </collision>
+    <collision name="leg_5_tibia_foot_collision">
+      <origin xyz="0.026362 0.006662 -0.118405" rpy="0 0 0"/>
+      <geometry>
+        <sphere radius="0.005"/>
       </geometry>
     </collision>
   </link>
