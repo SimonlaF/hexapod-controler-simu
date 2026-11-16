@@ -27,7 +27,7 @@ ESTOP_TOPIC = '/hexapod/estop'
 
 MAX_LINEAR_SPEED = 0.08
 MAX_YAW_RATE = 0.6
-DEFAULT_BODY_HEIGHT_MM = 110
+DEFAULT_BODY_HEIGHT_MM = 68
 DEFAULT_STEP_HEIGHT_MM = 30
 DEFAULT_FREQUENCY_X10 = 10
 
@@ -155,7 +155,7 @@ class HexapodControlWindow(QWidget):
         run_card = self._make_card('RUN', self._run_joystick)
         turn_card = self._make_card('TURN', self._turn_joystick)
 
-        self._height_slider = self._make_slider(80, 120, DEFAULT_BODY_HEIGHT_MM)
+        self._height_slider = self._make_slider(40, 90, DEFAULT_BODY_HEIGHT_MM)
         self._step_slider = self._make_slider(10, 50, DEFAULT_STEP_HEIGHT_MM)
         self._frequency_slider = self._make_slider(5, 20, DEFAULT_FREQUENCY_X10)
 

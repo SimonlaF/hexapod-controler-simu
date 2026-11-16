@@ -2,14 +2,14 @@ import math
 
 import numpy as np
 
-LEG_MOUNT_ANGLES = tuple(math.radians(150.0 + 60.0 * i) for i in range(6))
+LEG_MOUNT_ANGLES = tuple(math.radians(30.0 + 60.0 * i) for i in range(6))
 
-COXA_RADIUS = math.hypot(-0.115181, 0.0665)
-COXA_HEIGHT = -0.00645
+COXA_RADIUS = math.hypot(0.115181, 0.0665)
+COXA_HEIGHT = 0.03555
 
-FEMUR_JOINT_COXA = np.array([-0.029396, 0.038849, -0.018004])
-FEMUR_VECTOR_COXA = np.array([-0.077851, 0.044948, 0.0])
-TIBIA_FOOT_TIBIA = np.array([-0.040864, 0.001614, -0.085801])
+FEMUR_JOINT_COXA = np.array([0.048342, 0.006033, -0.018004])
+FEMUR_VECTOR_COXA = np.array([0.077851, 0.044948, 0.0])
+TIBIA_FOOT_TIBIA = np.array([0.021830, 0.034581, -0.085801])
 
 _COXA_MOUNT_ANGLE = LEG_MOUNT_ANGLES[0]
 _COS_MOUNT = math.cos(_COXA_MOUNT_ANGLE)
@@ -51,7 +51,7 @@ COXA_LIMIT = 1.1
 FEMUR_LIMIT_LOWER = -1.57
 FEMUR_LIMIT_UPPER = 1.57
 TIBIA_LIMIT_LOWER = -1.57
-TIBIA_LIMIT_UPPER = 1.5
+TIBIA_LIMIT_UPPER = 1.57
 
 JOINT_NAMES = tuple(
     f'leg_{leg}_{name}_joint'

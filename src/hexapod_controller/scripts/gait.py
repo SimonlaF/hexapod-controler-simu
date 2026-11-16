@@ -24,7 +24,7 @@ class HexapodGait(Node):
 
         self.declare_parameter('frequency', 1.0)
         self.declare_parameter('duty', 0.5)
-        self.declare_parameter('body_height', 0.11)
+        self.declare_parameter('body_height', 0.068)
         self.declare_parameter('step_height', 0.03)
         self.declare_parameter('max_linear_speed', 0.08)
         self.declare_parameter('max_yaw_rate', 0.6)
@@ -84,7 +84,7 @@ class HexapodGait(Node):
     def _on_params(self, msg):
         if len(msg.data) < 3:
             return
-        self._body_height = max(0.08, min(0.12, float(msg.data[0])))
+        self._body_height = max(0.04, min(0.09, float(msg.data[0])))
         self._step_height = max(0.0, min(0.05, float(msg.data[1])))
         self._frequency = max(0.5, min(2.0, float(msg.data[2])))
 
