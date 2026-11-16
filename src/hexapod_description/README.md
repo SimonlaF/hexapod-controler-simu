@@ -45,7 +45,7 @@ hexapod_description/
 ├── config/
 │   ├── display.rviz            # RViz2 visualization setup
 │   ├── gazebo.rviz             # RViz2 setup for Gazebo
-│   ├── hexapod_controllers.yaml # ros2_control configuration (joint_trajectory_controller)
+│   ├── hexapod_controllers.yaml # ros2_control configuration (joint_group_position_controller)
 │   └── ros_gz_bridge_gazebo.yaml # Bridge config (/clock and /joint_states)
 ├── launch/
 │   ├── display.launch.py       # Robot State Publisher + RViz2 + Joint GUI sliders
@@ -65,7 +65,7 @@ hexapod_description/
 ### 1. Build the Workspace
 From the root of your colcon workspace:
 ```bash
-colcon build --packages-select hexapod_description
+colcon build --packages-select hexapod_description hexapod_controller
 source install/setup.bash
 ```
 
@@ -85,4 +85,27 @@ Check loaded controllers:
 ```bash
 ros2 control list_controllers
 ```
+
+### 4. Cartesian Gait and Desktop Control Interface
+The launch file starts the Cartesian gait node after about 10 seconds. The optional PyQt5 desktop interface provides a run joystick, a turn joystick, body height/step height/frequency sliders, and STAND / RESET / FREEZE buttons:
+```bash
+ros2 launch hexapod_description gazebo.launch.py control_gui:=true
+```
+
+Start only the interface against an already running simulation:
+```bash
+ros2 run hexapod_controller control_gui
+```
+
+Disable the gait node if needed:
+```bash
+ros2 launch hexapod_description gazebo.launch.py gait:=false
+```
+
+The gait node subscribes to:
+- `/hexapod/cmd_vel` (`geometry_msgs/msg/Twist`) for body-frame linear and yaw velocity.
+- `/hexapod/gait_params` (`std_msgs/msg/Float64MultiArray`) with `[body_height_m, step_height_m, frequency_hz]`.
+- `/hexapod/estop` (`std_msgs/msg/Bool`) to freeze or release the last joint command.
+
+It publishes the 18 joint positions to `/joint_group_position_controller/commands`.
 

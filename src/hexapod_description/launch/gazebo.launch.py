@@ -3,10 +3,13 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import (
     AppendEnvironmentVariable,
+    DeclareLaunchArgument,
     IncludeLaunchDescription,
     TimerAction,
 )
+from launch.conditions import IfCondition
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 import xacro
 
@@ -19,6 +22,18 @@ def generate_launch_description():
     # Required for Gazebo Sim to resolve 'model://hexapod_description/meshes/...'
     install_share_dir = os.path.dirname(pkg_hexapod_description)
 
+    # Conda/RoboStack environments do not export the Gazebo system plugin and
+    # QML module paths, so Gazebo cannot find ign_ros2_control nor the IgnGazebo
+    # QML module (Entity Tree / Component Inspector panels) without this.
+    conda_prefix = os.environ.get('CONDA_PREFIX', '')
+    conda_lib = os.path.join(conda_prefix, 'lib')
+    qml_import_path = os.path.join(conda_lib, 'ign-gazebo-6', 'plugins', 'gui')
+
+    if conda_prefix and os.path.isdir(conda_lib):
+        for var in ('IGN_GAZEBO_SYSTEM_PLUGIN_PATH', 'GZ_SIM_SYSTEM_PLUGIN_PATH'):
+            current = os.environ.get(var)
+            os.environ[var] = conda_lib if not current else os.pathsep.join((conda_lib, current))
+
     gz_resource_path = AppendEnvironmentVariable(
         name='GZ_SIM_RESOURCE_PATH',
         value=install_share_dir
@@ -28,6 +43,15 @@ def generate_launch_description():
         name='IGN_GAZEBO_RESOURCE_PATH',
         value=install_share_dir
     )
+
+    extra_env_actions = []
+    if conda_prefix and os.path.isdir(qml_import_path):
+        extra_env_actions.append(
+            AppendEnvironmentVariable(
+                name='QML2_IMPORT_PATH',
+                value=qml_import_path
+            )
+        )
 
     robot_description_file = os.path.join(pkg_hexapod_description, 'urdf', 'hexapod.xacro')
     ros_gz_bridge_config = os.path.join(pkg_hexapod_description, 'config', 'ros_gz_bridge_gazebo.yaml')
@@ -77,11 +101,76 @@ def generate_launch_description():
         output='screen'
     )
 
+    gait = LaunchConfiguration('gait')
+    declare_gait = DeclareLaunchArgument(
+        'gait',
+        default_value='true',
+        description='Start the Cartesian gait controller'
+    )
+
+    control_gui = LaunchConfiguration('control_gui')
+    declare_control_gui = DeclareLaunchArgument(
+        'control_gui',
+        default_value='false',
+        description='Start the PyQt desktop control interface'
+    )
+
+    gait_node = TimerAction(
+        period=10.0,
+        condition=IfCondition(gait),
+        actions=[
+            Node(
+                package='hexapod_controller',
+                executable='gait',
+                name='hexapod_gait',
+                parameters=[{'use_sim_time': True}],
+                output='screen'
+            )
+        ]
+    )
+
+    control_gui_node = TimerAction(
+        period=12.0,
+        condition=IfCondition(control_gui),
+        actions=[
+            Node(
+                package='hexapod_controller',
+                executable='control_gui',
+                name='hexapod_control_gui',
+                output='screen'
+            )
+        ]
+    )
+
+    load_controllers = TimerAction(
+        period=8.0,
+        actions=[
+            Node(
+                package='controller_manager',
+                executable='spawner',
+                arguments=['joint_state_broadcaster', '--controller-manager-timeout', '60'],
+                output='screen'
+            ),
+            Node(
+                package='controller_manager',
+                executable='spawner',
+                arguments=['joint_group_position_controller', '--controller-manager-timeout', '60'],
+                output='screen'
+            ),
+        ]
+    )
+
     return LaunchDescription([
+        declare_gait,
+        declare_control_gui,
         gz_resource_path,
         ign_resource_path,
+        *extra_env_actions,
         gazebo,
         spawn_robot,
         ros_gz_bridge,
         robot_state_publisher,
+        load_controllers,
+        gait_node,
+        control_gui_node,
     ])

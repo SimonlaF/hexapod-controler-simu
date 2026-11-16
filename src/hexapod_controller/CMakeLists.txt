@@ -25,4 +25,21 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
+install(PROGRAMS
+  scripts/gait.py
+  DESTINATION lib/${PROJECT_NAME}
+  RENAME gait
+)
+
+install(PROGRAMS
+  scripts/control_gui.py
+  DESTINATION lib/${PROJECT_NAME}
+  RENAME control_gui
+)
+
+install(FILES
+  scripts/hexapod_kinematics.py
+  DESTINATION lib/${PROJECT_NAME}
+)
+
 ament_package()
