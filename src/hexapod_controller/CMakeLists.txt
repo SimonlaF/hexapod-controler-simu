@@ -39,6 +39,7 @@ install(PROGRAMS
 
 install(FILES
   scripts/hexapod_kinematics.py
+  scripts/dance.py
   DESTINATION lib/${PROJECT_NAME}
 )
 

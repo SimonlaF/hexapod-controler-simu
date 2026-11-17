@@ -87,10 +87,12 @@ ros2 control list_controllers
 ```
 
 ### 4. Cartesian Gait and Desktop Control Interface
-The launch file starts the Cartesian gait node after about 10 seconds. The optional PyQt5 desktop interface provides a run joystick, a turn joystick, body height/step height/frequency sliders, and STAND / RESET / FREEZE buttons:
+The launch file starts the Cartesian gait node after about 10 seconds. The optional PyQt5 desktop interface provides a move joystick, a turn joystick, body height/step height/frequency sliders, and STAND / RUN / DANCE / RESET / FREEZE buttons:
 ```bash
 ros2 launch hexapod_description gazebo.launch.py control_gui:=true
 ```
+
+`RUN` switches to a faster walk (0.20 m/s by default with a 1.4 Hz gait and a 25 mm step cap). `DANCE` makes the robot wave its legs around the body while the chassis sways and twists. Pressing `STAND`, `FREEZE`, or the active mode button again returns to normal walking.
 
 Start only the interface against an already running simulation:
 ```bash
@@ -106,6 +108,9 @@ The gait node subscribes to:
 - `/hexapod/cmd_vel` (`geometry_msgs/msg/Twist`) for body-frame linear and yaw velocity.
 - `/hexapod/gait_params` (`std_msgs/msg/Float64MultiArray`) with `[body_height_m, step_height_m, frequency_hz]`.
 - `/hexapod/estop` (`std_msgs/msg/Bool`) to freeze or release the last joint command.
+- `/hexapod/mode` (`std_msgs/msg/String`) with `walk`, `run`, or `dance`.
 
 It publishes the 18 joint positions to `/joint_group_position_controller/commands`.
+
+Run mode uses these gait-node parameters: `run_linear_speed` (default `0.20` m/s), `run_frequency` (default `1.4` Hz), `run_step_height_limit` (default `0.025` m), and `dance_ramp` (default `0.50` s). Lower `run_linear_speed` to `0.15` for first tests on real hardware.
 

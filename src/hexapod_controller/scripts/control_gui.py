@@ -6,7 +6,7 @@ import sys
 import rclpy
 from geometry_msgs.msg import Twist
 from rclpy.node import Node
-from std_msgs.msg import Bool, Float64MultiArray
+from std_msgs.msg import Bool, Float64MultiArray, String
 
 from PyQt5.QtCore import QPointF, Qt, QTimer, pyqtSignal
 from PyQt5.QtGui import QColor, QPainter, QPen
@@ -24,8 +24,14 @@ from PyQt5.QtWidgets import (
 CMD_TOPIC = '/hexapod/cmd_vel'
 PARAMS_TOPIC = '/hexapod/gait_params'
 ESTOP_TOPIC = '/hexapod/estop'
+MODE_TOPIC = '/hexapod/mode'
+
+MODE_WALK = 'walk'
+MODE_RUN = 'run'
+MODE_DANCE = 'dance'
 
 MAX_LINEAR_SPEED = 0.08
+MAX_RUN_LINEAR_SPEED = 0.20
 MAX_YAW_RATE = 0.6
 DEFAULT_BODY_HEIGHT_MM = 68
 DEFAULT_STEP_HEIGHT_MM = 30
@@ -123,14 +129,17 @@ class HexapodControlWindow(QWidget):
         self._run_y = 0.0
         self._turn_x = 0.0
         self._frozen = False
+        self._mode = MODE_WALK
 
         self._cmd_pub = node.create_publisher(Twist, CMD_TOPIC, 10)
         self._params_pub = node.create_publisher(Float64MultiArray, PARAMS_TOPIC, 10)
         self._estop_pub = node.create_publisher(Bool, ESTOP_TOPIC, 10)
+        self._mode_pub = node.create_publisher(String, MODE_TOPIC, 10)
 
         self.setWindowTitle('Hexapod Controller')
-        self.setMinimumWidth(620)
+        self.setMinimumWidth(680)
         self._build_ui()
+        self._set_mode(MODE_WALK)
 
         self._timer = QTimer(self)
         self._timer.timeout.connect(self._on_timer)
@@ -152,7 +161,7 @@ class HexapodControlWindow(QWidget):
         self._turn_joystick = Joystick(horizontal_only=True)
         self._turn_joystick.valueChanged.connect(self._on_turn)
 
-        run_card = self._make_card('RUN', self._run_joystick)
+        run_card = self._make_card('MOVE', self._run_joystick)
         turn_card = self._make_card('TURN', self._turn_joystick)
 
         self._height_slider = self._make_slider(40, 90, DEFAULT_BODY_HEIGHT_MM)
@@ -181,14 +190,30 @@ class HexapodControlWindow(QWidget):
         stand_button = QPushButton('STAND')
         stand_button.setObjectName('stand')
         stand_button.clicked.connect(self._stand)
-        stop_button = QPushButton('FREEZE')
-        stop_button.setObjectName('stop')
-        stop_button.clicked.connect(self._freeze)
+
+        self._run_button = QPushButton('RUN')
+        self._run_button.setObjectName('run')
+        self._run_button.setCheckable(True)
+        self._run_button.setToolTip('Fast walk: up to 0.20 m/s')
+        self._run_button.clicked.connect(self._toggle_run)
+
+        self._dance_button = QPushButton('DANCE')
+        self._dance_button.setObjectName('dance')
+        self._dance_button.setCheckable(True)
+        self._dance_button.setToolTip('Leg wave and body sway')
+        self._dance_button.clicked.connect(self._toggle_dance)
+
         reset_button = QPushButton('RESET')
         reset_button.clicked.connect(self._reset)
 
+        stop_button = QPushButton('FREEZE')
+        stop_button.setObjectName('stop')
+        stop_button.clicked.connect(self._freeze)
+
         buttons = QHBoxLayout()
         buttons.addWidget(stand_button)
+        buttons.addWidget(self._run_button)
+        buttons.addWidget(self._dance_button)
         buttons.addWidget(reset_button)
         buttons.addWidget(stop_button)
 
@@ -218,6 +243,10 @@ class HexapodControlWindow(QWidget):
             QPushButton:hover { background-color: #38424e; }
             QPushButton#stand { background-color: #1f6f45; border-color: #2e9a61; }
             QPushButton#stop { background-color: #8a2d2d; border-color: #c14a4a; }
+            QPushButton#run { background-color: #24506f; border-color: #3b7ca8; }
+            QPushButton#run:checked { background-color: #2f8fd8; border-color: #7cc8ff; }
+            QPushButton#dance { background-color: #513268; border-color: #7a4c99; }
+            QPushButton#dance:checked { background-color: #8f4fc4; border-color: #c99bff; }
             QSlider::groove:horizontal { height: 6px; background: #2b333d; border-radius: 3px; }
             QSlider::handle:horizontal { width: 18px; margin: -7px 0; border-radius: 9px; background: #5db9ff; }
             '''
@@ -258,9 +287,17 @@ class HexapodControlWindow(QWidget):
         if not rclpy.ok():
             return
         deadband = 0.08
-        vx = self._run_y * MAX_LINEAR_SPEED if abs(self._run_y) > deadband else 0.0
-        vy = -self._run_x * MAX_LINEAR_SPEED if abs(self._run_x) > deadband else 0.0
-        wz = -self._turn_x * MAX_YAW_RATE if abs(self._turn_x) > deadband else 0.0
+        if self._mode == MODE_DANCE:
+            vx = 0.0
+            vy = 0.0
+            wz = 0.0
+        else:
+            max_linear = (
+                MAX_RUN_LINEAR_SPEED if self._mode == MODE_RUN else MAX_LINEAR_SPEED
+            )
+            vx = self._run_y * max_linear if abs(self._run_y) > deadband else 0.0
+            vy = -self._run_x * max_linear if abs(self._run_x) > deadband else 0.0
+            wz = -self._turn_x * MAX_YAW_RATE if abs(self._turn_x) > deadband else 0.0
         if self._frozen:
             vx = 0.0
             vy = 0.0
@@ -271,11 +308,40 @@ class HexapodControlWindow(QWidget):
         msg.linear.y = vy
         msg.angular.z = wz
         self._cmd_pub.publish(msg)
-        self._status.setText(f'cmd  vx={vx:+.3f} m/s  vy={vy:+.3f} m/s  wz={wz:+.2f} rad/s')
+
+        if self._frozen:
+            self._status.setText('FREEZE active')
+        elif self._mode == MODE_DANCE:
+            self._status.setText('DANCE - leg wave and body sway')
+        else:
+            prefix = 'RUN  ' if self._mode == MODE_RUN else ''
+            self._status.setText(
+                f'{prefix}cmd  vx={vx:+.3f} m/s  vy={vy:+.3f} m/s  wz={wz:+.2f} rad/s'
+            )
+
+    def _set_mode(self, mode):
+        self._mode = mode
+        self._mode_pub.publish(String(data=mode))
+        self._run_button.setChecked(mode == MODE_RUN)
+        self._dance_button.setChecked(mode == MODE_DANCE)
+
+    def _toggle_run(self, checked):
+        self._set_mode(MODE_RUN if checked else MODE_WALK)
+        self._status.setText('RUN mode' if checked else 'WALK mode')
+
+    def _toggle_dance(self, checked):
+        if checked:
+            self._send_stop()
+            self._set_mode(MODE_DANCE)
+            self._status.setText('DANCE - leg wave and body sway')
+        else:
+            self._set_mode(MODE_WALK)
+            self._status.setText('WALK mode')
 
     def _publish_params(self):
         if not rclpy.ok():
             return
+        self._mode_pub.publish(String(data=self._mode))
         msg = Float64MultiArray()
         msg.data = [
             self._height_slider.value() / 1000.0,
@@ -292,12 +358,14 @@ class HexapodControlWindow(QWidget):
     def _freeze(self):
         self._frozen = True
         self._send_stop()
+        self._set_mode(MODE_WALK)
         self._estop_pub.publish(Bool(data=True))
         self._status.setText('FREEZE active')
 
     def _stand(self):
         self._frozen = False
         self._send_stop()
+        self._set_mode(MODE_WALK)
         self._estop_pub.publish(Bool(data=False))
         self._status.setText('Standing')
 
@@ -312,6 +380,8 @@ class HexapodControlWindow(QWidget):
             self._freeze()
         elif event.key() == Qt.Key_R:
             self._stand()
+        elif event.key() == Qt.Key_D:
+            self._toggle_dance(not self._dance_button.isChecked())
         else:
             super().keyPressEvent(event)
 
