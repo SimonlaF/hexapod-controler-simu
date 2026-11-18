@@ -42,11 +42,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="0 0 0.045" rpy="0 0 0"/>
+    <collision name="base_link_collision">
+      <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <!-- Primitive box aligned with the real chassis (z 0..+0.09 m) instead of the low upstream proxy -->
-        <box size="0.22 0.18 0.09"/>
+        <mesh filename="package://hexapod_description/meshes/collision/base_link.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -67,10 +66,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="0.019518 -0.000562 0.015622" rpy="0 0 0"/>
+    <collision name="leg_0_servo_1_collision">
+      <origin xyz="-0.084941 -0.060876 -0.0015" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_0_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -88,10 +87,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="0.019272 0.011506 -0.017675" rpy="0 0 0"/>
+    <collision name="leg_0_coxa_collision">
+      <origin xyz="-0.115181 -0.0665 -0.03555" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.02" length="0.04"/>
+        <mesh filename="package://hexapod_description/meshes/collision/coxa_0.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -109,10 +108,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="0.00131 0.022489 4.418e-6" rpy="0 0 0"/>
+    <collision name="leg_0_servo_2_collision">
+      <origin xyz="-0.163523 -0.072533 -0.017546" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_0_2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -130,10 +129,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="0.023711 0.032227 -0.01025" rpy="0 0 0"/>
+    <collision name="leg_0_femur_collision">
+      <origin xyz="-0.169111 -0.079454 -0.027796" rpy="0 0 0"/>
       <geometry>
-        <box size="0.035 0.08 0.03"/>
+        <mesh filename="package://hexapod_description/meshes/collision/femur_0.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -151,10 +150,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="-0.011393 0.011576 -0.010254" rpy="0 0 0"/>
+    <collision name="leg_0_servo_3_collision">
+      <origin xyz="-0.232637 -0.116015 -0.027796" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_0_3.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -172,10 +171,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="0.02183 0.034582 -0.025801" rpy="0 0 0"/>
+    <collision name="leg_0_tibia_collision">
+      <origin xyz="-0.241375 -0.11748 -0.017546" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.012" length="0.12"/>
+        <mesh filename="package://hexapod_description/meshes/collision/tibia_0.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
     <collision name="leg_0_tibia_foot_collision">
@@ -202,10 +201,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="0.010246 0.016621 0.015622" rpy="0 0 0"/>
+    <collision name="leg_1_servo_1_collision">
+      <origin xyz="0.01025 -0.104 -0.0015" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_1_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -223,10 +222,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="-0.000329 0.022443 -0.017675" rpy="0 0 0"/>
+    <collision name="leg_1_coxa_collision">
+      <origin xyz="0.0 -0.133 -0.03555" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.02" length="0.04"/>
+        <mesh filename="package://hexapod_description/meshes/collision/coxa_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -244,10 +243,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="-0.018821 0.012378 4.418e-6" rpy="0 0 0"/>
+    <collision name="leg_1_servo_2_collision">
+      <origin xyz="-0.018946 -0.177882 -0.017546" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_1_2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -265,10 +264,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="-0.016054 0.036647 -0.01025" rpy="0 0 0"/>
+    <collision name="leg_1_femur_collision">
+      <origin xyz="-0.015746 -0.186182 -0.027796" rpy="0 0 0"/>
       <geometry>
-        <box size="0.035 0.08 0.03"/>
+        <mesh filename="package://hexapod_description/meshes/collision/femur_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -286,10 +285,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="-0.015721 -0.004079 -0.010254" rpy="0 0 0"/>
+    <collision name="leg_1_servo_3_collision">
+      <origin xyz="-0.015846 -0.259477 -0.027796" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_1_3.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -307,10 +306,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="-0.019033 0.036196 -0.025801" rpy="0 0 0"/>
+    <collision name="leg_1_tibia_collision">
+      <origin xyz="-0.018946 -0.267777 -0.017546" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.012" length="0.12"/>
+        <mesh filename="package://hexapod_description/meshes/collision/tibia_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
     <collision name="leg_1_tibia_foot_collision">
@@ -337,10 +336,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="-0.009271 0.017184 0.015622" rpy="0 0 0"/>
+    <collision name="leg_2_servo_1_collision">
+      <origin xyz="0.095192 -0.043123 -0.0015" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_2_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -358,10 +357,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="-0.019598 0.010935 -0.017675" rpy="0 0 0"/>
+    <collision name="leg_2_coxa_collision">
+      <origin xyz="0.115181 -0.0665 -0.03555" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.02" length="0.04"/>
+        <mesh filename="package://hexapod_description/meshes/collision/coxa_2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -379,10 +378,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="-0.020131 -0.010111 4.37e-6" rpy="0 0 0"/>
+    <collision name="leg_2_servo_2_collision">
+      <origin xyz="0.144577 -0.105349 -0.017546" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_2_2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -400,10 +399,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="-0.039765 0.00442 -0.01025" rpy="0 0 0"/>
+    <collision name="leg_2_femur_collision">
+      <origin xyz="0.153365 -0.106728 -0.027796" rpy="0 0 0"/>
       <geometry>
-        <box size="0.035 0.08 0.03"/>
+        <mesh filename="package://hexapod_description/meshes/collision/femur_2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -421,10 +420,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="-0.004328 -0.015655 -0.010254" rpy="0 0 0"/>
+    <collision name="leg_2_servo_3_collision">
+      <origin xyz="0.216791 -0.143462 -0.027796" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_2_3.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -442,10 +441,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="-0.040863 0.001614 -0.025801" rpy="0 0 0"/>
+    <collision name="leg_2_tibia_collision">
+      <origin xyz="0.222429 -0.150297 -0.017546" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.012" length="0.12"/>
+        <mesh filename="package://hexapod_description/meshes/collision/tibia_2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
     <collision name="leg_2_tibia_foot_collision">
@@ -472,10 +471,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="-0.019517 0.000562 0.015622" rpy="0 0 0"/>
+    <collision name="leg_3_servo_1_collision">
+      <origin xyz="0.084942 0.060876 -0.0015" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_3_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -493,10 +492,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="-0.019269 -0.011504 -0.017675" rpy="0 0 0"/>
+    <collision name="leg_3_coxa_collision">
+      <origin xyz="0.115181 0.0665 -0.03555" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.02" length="0.04"/>
+        <mesh filename="package://hexapod_description/meshes/collision/coxa_3.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -514,10 +513,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="-0.00141 -0.022316 4.37e-6" rpy="0 0 0"/>
+    <collision name="leg_3_servo_2_collision">
+      <origin xyz="0.163523 0.072533 -0.017546" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_3_2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -535,10 +534,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="-0.023711 -0.032227 -0.01025" rpy="0 0 0"/>
+    <collision name="leg_3_femur_collision">
+      <origin xyz="0.169211 0.079281 -0.027796" rpy="0 0 0"/>
       <geometry>
-        <box size="0.035 0.08 0.03"/>
+        <mesh filename="package://hexapod_description/meshes/collision/femur_3.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -556,10 +555,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="0.011393 -0.011576 -0.010254" rpy="0 0 0"/>
+    <collision name="leg_3_servo_3_collision">
+      <origin xyz="0.232737 0.115842 -0.027796" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_3_3.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -577,10 +576,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="-0.02183 -0.034582 -0.025801" rpy="0 0 0"/>
+    <collision name="leg_3_tibia_collision">
+      <origin xyz="0.241475 0.117307 -0.017546" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.012" length="0.12"/>
+        <mesh filename="package://hexapod_description/meshes/collision/tibia_3.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
     <collision name="leg_3_tibia_foot_collision">
@@ -607,10 +606,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="-0.010246 -0.016621 0.015622" rpy="0 0 0"/>
+    <collision name="leg_4_servo_1_collision">
+      <origin xyz="-0.01025 0.104 -0.0015" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_4_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -628,10 +627,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="0.000329 -0.022443 -0.017675" rpy="0 0 0"/>
+    <collision name="leg_4_coxa_collision">
+      <origin xyz="0.0 0.133 -0.03555" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.02" length="0.04"/>
+        <mesh filename="package://hexapod_description/meshes/collision/coxa_4.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -649,10 +648,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="0.018821 -0.012378 4.418e-6" rpy="0 0 0"/>
+    <collision name="leg_4_servo_2_collision">
+      <origin xyz="0.018946 0.177882 -0.017546" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_4_2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -670,10 +669,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="0.016054 -0.036647 -0.01025" rpy="0 0 0"/>
+    <collision name="leg_4_femur_collision">
+      <origin xyz="0.015746 0.186182 -0.027796" rpy="0 0 0"/>
       <geometry>
-        <box size="0.035 0.08 0.03"/>
+        <mesh filename="package://hexapod_description/meshes/collision/femur_4.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -691,10 +690,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="0.015721 0.004079 -0.010254" rpy="0 0 0"/>
+    <collision name="leg_4_servo_3_collision">
+      <origin xyz="0.015846 0.259477 -0.027796" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_4_3.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -712,10 +711,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="0.019033 -0.036196 -0.025801" rpy="0 0 0"/>
+    <collision name="leg_4_tibia_collision">
+      <origin xyz="0.018946 0.267777 -0.017546" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.012" length="0.12"/>
+        <mesh filename="package://hexapod_description/meshes/collision/tibia_4.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
     <collision name="leg_4_tibia_foot_collision">
@@ -742,10 +741,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="0.009271 -0.017184 0.015622" rpy="0 0 0"/>
+    <collision name="leg_5_servo_1_collision">
+      <origin xyz="-0.095192 0.043123 -0.0015" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_5_1.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -763,10 +762,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="0.019597 -0.010935 -0.017675" rpy="0 0 0"/>
+    <collision name="leg_5_coxa_collision">
+      <origin xyz="-0.115181 0.0665 -0.03555" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.02" length="0.04"/>
+        <mesh filename="package://hexapod_description/meshes/collision/coxa_5.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -784,10 +783,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="0.020131 0.010111 4.37e-6" rpy="0 0 0"/>
+    <collision name="leg_5_servo_2_collision">
+      <origin xyz="-0.144577 0.105349 -0.017546" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_5_2.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -805,10 +804,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="0.039765 -0.00442 -0.01025" rpy="0 0 0"/>
+    <collision name="leg_5_femur_collision">
+      <origin xyz="-0.153365 0.106728 -0.027796" rpy="0 0 0"/>
       <geometry>
-        <box size="0.035 0.08 0.03"/>
+        <mesh filename="package://hexapod_description/meshes/collision/femur_5.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -826,10 +825,10 @@
       </geometry>
       <material name="dark_grey"/>
     </visual>
-    <collision>
-      <origin xyz="0.004328 0.015655 -0.010254" rpy="0 0 0"/>
+    <collision name="leg_5_servo_3_collision">
+      <origin xyz="-0.216791 0.143462 -0.027796" rpy="0 0 0"/>
       <geometry>
-        <box size="0.045 0.035 0.025"/>
+        <mesh filename="package://hexapod_description/meshes/collision/st3215_5_3.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
   </link>
@@ -847,10 +846,10 @@
       </geometry>
       <material name="silver"/>
     </visual>
-    <collision>
-      <origin xyz="0.040863 -0.001614 -0.025801" rpy="0 0 0"/>
+    <collision name="leg_5_tibia_collision">
+      <origin xyz="-0.222429 0.150297 -0.017546" rpy="0 0 0"/>
       <geometry>
-        <cylinder radius="0.012" length="0.12"/>
+        <mesh filename="package://hexapod_description/meshes/collision/tibia_5.stl" scale="0.001 0.001 0.001"/>
       </geometry>
     </collision>
     <collision name="leg_5_tibia_foot_collision">
